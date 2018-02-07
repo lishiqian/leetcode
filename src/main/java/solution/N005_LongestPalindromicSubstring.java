@@ -38,6 +38,8 @@ public class N005_LongestPalindromicSubstring {
         }
         return true;
     }*/
+
+
     public String longestPalindrome(String s) {
         if(s.length() == 1) return s;
         String res = null;
@@ -83,8 +85,6 @@ public class N005_LongestPalindromicSubstring {
                 maxLen = curLen;
             }
         }
-
-
 
         return res;
     }
