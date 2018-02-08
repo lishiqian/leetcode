@@ -1,7 +1,7 @@
 package solution;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import org.junit.Test;
 
 /**
  * Implement atoi to convert a string to an integer.
@@ -18,24 +18,36 @@ import java.util.regex.Pattern;
 public class N008_StringToInteger {
     public int myAtoi(String str) {
         str = str.trim();
-        Pattern pattern = Pattern.compile("^[+-]?[0-9]+$");
-        Matcher matcher = pattern.matcher(str);
-        if(matcher.matches()){
-            boolean isNegative = false;
-            int result = 0;
-            for (int i = 0; i < str.length(); i++) {
-                if(str.charAt(i) == '-'){
-                    isNegative = true;
-                    continue;
-                }else if(str.charAt(i) == '+'){
-                    continue;
-                }
-
-                result = result * 10 + (str.charAt(i) - '0');
-            }
-            return isNegative ? -result:result;
-        }else{
-            return 0;
+        if(str.length() == 0) return 0;
+        boolean sign = true;
+        long ans = 0;
+        int index = 0;
+        if(str.charAt(0) == '+'){
+            sign = true;
+            index++;
+        }else if(str.charAt(0) == '-'){
+            sign = false;
+            index++;
         }
+
+        while (index < str.length()){
+            if(Character.isDigit(str.codePointAt(index))){
+                ans = ans * 10 + (str.codePointAt(index++) - '0');
+                if(sign == true && ans > Integer.MAX_VALUE ){
+                    return Integer.MAX_VALUE ;
+                }else if(sign == false && -ans < Integer.MIN_VALUE){
+                    return Integer.MIN_VALUE;
+                }
+            }else{
+                break;
+            }
+        }
+
+        return (int)(sign == true ? ans : -ans);
+    }
+
+    @Test
+    public void test(){
+        System.out.println(myAtoi("2147483647"));
     }
 }
