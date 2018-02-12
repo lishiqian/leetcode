@@ -7,17 +7,20 @@ import org.junit.Test;
  *
  * Input is guaranteed to be within the range from 1 to 3999.
  */
+
+/**
+ * 给你一个罗马数字，转换成整数，输入范围保证在1到3999之间
+ */
 public class N013_RomanToInteger {
     public int romanToInt(String s) {
-        int sum = 0;
-        for (int i = 0; i < s.length(); i++) {
-            int romanValue = getRomanInt(s.charAt(i));
-            if(i == 0) {
-                sum += romanValue;
-                continue;
+        if(s == null || s.length() == 0) return 0;
+        int sum = getRomanInt(s.charAt(s.length()-1));
+        for (int i = s.length()-2; i >= 0; i--) {
+            if(getRomanInt(s.charAt(i))<getRomanInt(s.charAt(i+1))){
+                sum -= getRomanInt(s.charAt(i));
+            }else{
+                sum += getRomanInt(s.charAt(i));
             }
-            if(sum >= romanValue) sum = sum + romanValue;
-            else sum = romanValue - sum;
         }
         return sum;
     }
@@ -36,6 +39,6 @@ public class N013_RomanToInteger {
 
     @Test
     public void test(){
-        System.out.println(romanToInt(""));
+        System.out.println(romanToInt("VD"));
     }
 }
