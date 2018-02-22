@@ -13,6 +13,7 @@ import java.util.Arrays;
  */
 
 /**
+ * 题目大意:
  * 给定一个整数数组，找出其中三个之和最接近target的三个数的和的值
  */
 public class N016_3SumClosest {

@@ -19,6 +19,7 @@ import java.util.List;
 
 
 /**
+ * 题目大意:
  * 给你一个整数数组，求出其中三个数相加等于0的所有数
  */
 public class N015_3Sum {

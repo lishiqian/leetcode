@@ -5,6 +5,7 @@ package solution;
  */
 
 /**
+ * 题目大意:
  * 编写一个函数求字符串数组的最长公共前缀
  */
 public class N014_LongestCommonPrefix {
