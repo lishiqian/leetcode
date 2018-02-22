@@ -20,6 +20,12 @@ import java.util.List;
  * [-2,  0, 0, 2]
  * ]
  */
+
+
+/**
+ * 题目大意:
+ * 从数组中找到四个数相加等于target的所有四胞胎，四胞胎不能重复（排序后的数不能相同）
+ */
 public class N018_4Sum {
     public List<List<Integer>> fourSum(int[] nums, int target) {
         ArrayList<List<Integer>> resList = new ArrayList<List<Integer>>();

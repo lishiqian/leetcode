@@ -14,6 +14,11 @@ import common.ListNode;
  * Given n will always be valid.
  * Try to do this in one pass.
  */
+
+/**
+ * 题目大意:
+ * 给你一个链表，删除链表倒数第n个节点
+ */
 public class N019_RemoveNthNodeFromEndofList {
     public ListNode removeNthFromEnd(ListNode head, int n) {
         ListNode start = new ListNode(0);
