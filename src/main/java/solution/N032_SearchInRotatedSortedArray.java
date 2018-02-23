@@ -10,6 +10,8 @@ package solution;
  * You may assume no duplicate exists in the array.
  */
 
+import org.junit.Test;
+
 /**
  * 题目大意:
  * 在一个旋转后的排序数组中查找target
@@ -32,8 +34,16 @@ public class N032_SearchInRotatedSortedArray {
                 else
                     hi = mid - 1;
             }
+            System.out.printf("low:%d,high:%d\n",lo,hi);
         }
 
+
         return nums[lo] == target ? lo : -1;
+    }
+
+
+    @Test
+    public void test(){
+        System.out.println(search(new int[]{4,5,6,7,8,9,0,1,2,3,4},0));
     }
 }
