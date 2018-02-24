@@ -16,7 +16,7 @@ import org.junit.Test;
  * 题目大意:
  * 在一个旋转后的排序数组中查找target
  */
-public class N032_SearchInRotatedSortedArray {
+public class N033_SearchInRotatedSortedArray {
     public int search(int[] nums, int target) {
         if(nums == null || nums.length == 0) return -1;
         int lo = 0,hi = nums.length - 1;
