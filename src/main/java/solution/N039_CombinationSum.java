@@ -24,7 +24,7 @@ import java.util.List;
 
 /**
  * 题目大意：
- * 给你一个数组，求出其和为target的所有组合
+ * 给你一个数组，求出其和为target的所有组合,一个数可以使用多次
  */
 public class N039_CombinationSum {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
@@ -34,6 +34,19 @@ public class N039_CombinationSum {
         return resList;
     }
 
+//    public void combination(int[] candidates, int target,int index,LinkedList<Integer> curList,List<List<Integer>> resList) {
+//        if(target == 0){
+//            resList.add(new LinkedList<>(curList));
+//            return;
+//        }
+//        if(index >= candidates.length || target < 0) return;
+//
+//        curList.add(candidates[index]);
+//        combination(candidates,target-candidates[index],index,curList,resList);
+//        curList.removeLast();
+//        combination(candidates,target,index + 1,curList,resList);
+//    }
+
     public void combination(int[] candidates, int target,int index,LinkedList<Integer> curList,List<List<Integer>> resList) {
         if(target == 0){
             resList.add(new LinkedList<>(curList));
@@ -41,10 +54,11 @@ public class N039_CombinationSum {
         }
         if(index >= candidates.length || target < 0) return;
 
-        curList.add(candidates[index]);
-        combination(candidates,target-candidates[index],index,curList,resList);
-        curList.removeLast();
-        combination(candidates,target,index + 1,curList,resList);
+        for (int i = index; i < candidates.length; i++) {
+            curList.add(candidates[i]);
+            combination(candidates,target-candidates[i],i,curList,resList);
+            curList.removeLast();
+        }
     }
 
     @Test
