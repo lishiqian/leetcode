@@ -1,6 +1,7 @@
 package solution;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -22,6 +23,29 @@ import java.util.List;
  */
 public class N030_SubstringWithConcatenationOfAllWords {
     public List<Integer> findSubstring(String s, String[] words) {
-        return null;
+        HashMap<String,Integer> counts = new HashMap<String,Integer>();
+        for (int i = 0; i < words.length; i++) {
+            counts.put(words[i],counts.get(words[i]) == null ? 1 : counts.get(words[i]) + 1);
+        }
+        List<Integer> indexs = new ArrayList<Integer>();
+        int len = words[0].length(),num = words.length,slen = s.length();
+        for (int i = 0; i < slen - len * num + 1; i++) {
+            HashMap<String,Integer> seen = new HashMap<String,Integer>();
+            int j = 0;
+            while (j < num){
+                String word = s.substring(i + j * len,i + (j + 1) * len);
+                if(counts.containsKey(word)){
+                    seen.put(word,seen.get(word) == null ? 1 : seen.get(word) + 1);
+                    if(seen.get(word) > counts.get(word))
+                        break;
+                }else {
+                    break;
+                }
+                j++;
+            }
+
+            if(j == num) indexs.add(i);
+        }
+        return indexs;
     }
 }
