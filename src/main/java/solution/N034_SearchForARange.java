@@ -13,6 +13,11 @@ import org.junit.Test;
  * Given [5, 7, 7, 8, 8, 10] and target value 8,
  * return [3, 4].
  */
+
+/**
+ * 题目大意:
+ * 给你一个排序数组,求出值为target的开始索引和结束索引
+ */
 public class N034_SearchForARange {
 //    public int[] searchRange(int[] nums, int target) {
 //        int mid = -1;
