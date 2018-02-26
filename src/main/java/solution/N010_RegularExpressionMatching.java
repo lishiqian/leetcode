@@ -1,5 +1,7 @@
 package solution;
 
+import org.junit.Test;
+
 import java.util.regex.Pattern;
 
 /**
@@ -24,7 +26,30 @@ import java.util.regex.Pattern;
  */
 public class N010_RegularExpressionMatching {
     public boolean isMatch(String s, String p) {
-        Pattern pattern = Pattern.compile(p);
-        return pattern.matcher(s).matches();
+        return isMatch(s,p,s.length()-1,p.length()-1);
+    }
+
+    public boolean isMatch(String s, String p,int sIndex,int pIndex){
+        if(pIndex == -1) return sIndex == -1;
+
+        if(p.charAt(pIndex) == '*'){
+            if(sIndex > -1 && (p.charAt(pIndex-1) == '.' || p.charAt(pIndex-1) == s.charAt(sIndex)))
+                if(isMatch(s,p,sIndex-1,pIndex)) return true;
+            return isMatch(s,p,sIndex,pIndex-1);
+        }
+        if(p.charAt(pIndex) == '.' || s.charAt(sIndex)==p.charAt(pIndex)){
+            return isMatch(s,p,sIndex - 1, pIndex - 1);
+        }
+        return false;
+    }
+
+    @Test
+    public void test(){
+        //System.out.println(isMatch("aa","a."));
+        System.out.println(isMatch("aaa","a.*"));
+        System.out.println(isMatch("aaa","a*"));
+        System.out.println(isMatch("aaa",".*"));
+        System.out.println(isMatch("aab","c*a*b"));
+        System.out.println(isMatch("aab","a"));
     }
 }
