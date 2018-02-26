@@ -12,7 +12,7 @@ import org.junit.Test;
  * Both num1 and num2 does not contain any leading zero.
  * You must not use any built-in BigInteger library or convert the inputs to integer directly.
  */
-public class N042_MultiplyStrings {
+class N043_MultiplyStrings {
     public String multiply(String num1, String num2) {
         int n = num1.length(),m = num2.length();
         int[] pos = new int[m + n];
