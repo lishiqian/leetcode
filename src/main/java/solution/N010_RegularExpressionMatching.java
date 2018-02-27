@@ -25,23 +25,32 @@ import java.util.regex.Pattern;
  * isMatch("aab", "c*a*b") → true
  */
 public class N010_RegularExpressionMatching {
+
+    //https://www.jianshu.com/p/b591b74008d0
     public boolean isMatch(String s, String p) {
-        return isMatch(s,p,s.length()-1,p.length()-1);
+        int m = s.length(),n = p.length();
+        boolean[][] dp = new boolean[m + 1][n + 1];
+        dp[0][0] = true;
+
+        for (int i = 0; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if(i > 0 && (s.charAt(i-1) == p.charAt(j-1) || p.charAt(j-1) == '.')){
+                    dp[i][j] = dp[i - 1][j - 1];
+                }else if(p.charAt(j - 1) == '*'){
+                    if(i == 0 || (s.charAt(i - 1) != p.charAt(j - 2) && p.charAt(j-2) != '.'))
+                        dp[i][j] = dp[i][j-2]; //这个字符不出现 aab -> c*aab = true
+                    else
+                        dp[i][j] = dp[i-1][j] || dp[i][j-1] || dp[i][j - 2];
+                }else{
+                    dp[i][j] = false; //可以不写 默认为false
+                }
+
+            }
+        }
+        return dp[m][n];
     }
 
-    public boolean isMatch(String s, String p,int sIndex,int pIndex){
-        if(pIndex == -1) return sIndex == -1;
 
-        if(p.charAt(pIndex) == '*'){
-            if(sIndex > -1 && (p.charAt(pIndex-1) == '.' || p.charAt(pIndex-1) == s.charAt(sIndex)))
-                if(isMatch(s,p,sIndex-1,pIndex)) return true;
-            return isMatch(s,p,sIndex,pIndex-1);
-        }
-        if(p.charAt(pIndex) == '.' || s.charAt(sIndex)==p.charAt(pIndex)){
-            return isMatch(s,p,sIndex - 1, pIndex - 1);
-        }
-        return false;
-    }
 
     @Test
     public void test(){
