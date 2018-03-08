@@ -15,17 +15,30 @@ import common.ListNode;
  * 链表去重
  */
 public class N083_RemoveDuplicatesfromSortedList {
+//    public ListNode deleteDuplicates(ListNode head) {
+//        ListNode current = head;
+//        while (current != null){
+//            if(current.next != null){
+//                if(current.val == current.next.val){
+//                    current.next = current.next.next;
+//                }else{
+//                    current = current.next;
+//                }
+//            }else {
+//                return head;
+//            }
+//        }
+//        return head;
+//    }
+//
+//
     public ListNode deleteDuplicates(ListNode head) {
         ListNode current = head;
         while (current != null){
-            if(current.next != null){
-                if(current.val == current.next.val){
-                    current.next = current.next.next;
-                }else{
-                    current = current.next;
-                }
+            if(current.next != null && current.val == current.next.val){
+                current.next = current.next.next;
             }else {
-                return head;
+                current = current.next;
             }
         }
         return head;
