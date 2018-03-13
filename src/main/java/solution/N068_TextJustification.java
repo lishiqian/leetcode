@@ -24,6 +24,7 @@ import java.util.List;
  * 给定一组单词和一个长度L，对文本进行格式化，使每一行都有确切的L字符，并且完全（左右）是正确的。
  * 你应该用贪婪的方式来表达你的话语;也就是说，在每一行中尽可能多地写单词。在必要时垫额外的空间，这样每一行都有正确的L字符。
  * 单词之间的额外空格应该尽可能均匀地分布。如果一条直线上的空间数不均匀地在单词之间进行分配，那么左边的空槽将被分配的空间多于右边的槽。
+ * ps:遍历完所有单词之后需要特殊处理最后一行，这一行是居左对齐的，每个单词之间只有一个空格，处理完这行的单词之后，在后面补齐空格就可以了
  */
 public class N068_TextJustification {
     public List<String> fullJustify(String[] words, int maxWidth) {
@@ -56,21 +57,33 @@ public class N068_TextJustification {
         StringBuilder sb = new StringBuilder(maxWidth);
         int spaceCount = (maxWidth - sumWordLen);
         sb.append(words[startIndex]);
-        if(wordCount > 0){
-            int addSpaceCount = spaceCount / (wordCount);//添加空格次数
-            int modSpaceCount = spaceCount % (wordCount);//空格除不尽余数
-            for (int i = startIndex + 1; i <= startIndex + wordCount; i++) {
-                for (int j = 0; j < addSpaceCount; j++) {
+        if(startIndex + wordCount + 1 < words.length) {
+            if (wordCount > 0) {
+                int addSpaceCount = spaceCount / (wordCount);//添加空格次数
+                int modSpaceCount = spaceCount % (wordCount);//空格除不尽余数
+                for (int i = startIndex + 1; i <= startIndex + wordCount; i++) {
+                    for (int j = 0; j < addSpaceCount; j++) {
+                        sb.append(' ');
+                    }
+                    if (modSpaceCount > 0) {
+                        sb.append(' ');
+                        modSpaceCount--;
+                    }
+                    sb.append(words[i]);
+                }
+            } else {
+                for (int j = 0; j < spaceCount; j++) {
                     sb.append(' ');
                 }
-                if(modSpaceCount > 0){
-                    sb.append(' ');
-                    modSpaceCount--;
-                }
-                sb.append(words[i]);
             }
-        }else{
-            for (int j = 0; j < spaceCount; j++) {
+        }else{ //最后一行特殊处理
+            for (int i = startIndex + 1; i <= startIndex + wordCount; i++){
+                sb.append(' ');
+                sb.append(words[i]);
+                spaceCount--;
+            }
+
+            while (spaceCount > 0){
                 sb.append(' ');
             }
         }
