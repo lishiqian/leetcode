@@ -24,7 +24,8 @@ import common.TreeNode;
 
 /**
  * 题目大意：
- * 给定一个二叉树的后续遍历和中序遍历，构建成一个二叉树
+ * 给定一个二叉树的后续
+ * 遍历和中序遍历，构建成一个二叉树
  */
 public class N106_ConstructBinaryTreeFromInorderAndPostorderTraversal {
     public TreeNode buildTree(int[] inorder, int[] postorder) {
