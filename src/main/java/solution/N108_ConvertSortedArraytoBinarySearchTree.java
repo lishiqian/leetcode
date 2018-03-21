@@ -20,6 +20,11 @@ import common.TreeNode;
  *    /   /
  *  -10  5
  */
+
+/**
+ * 题目大意：
+ * 给你一个有序的整数数组，返回一个平衡的二叉排序树（AVL树）。
+ */
 public class N108_ConvertSortedArraytoBinarySearchTree {
     public TreeNode sortedArrayToBST(int[] nums) {
         return create(nums,0,nums.length - 1);
