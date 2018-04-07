@@ -9,6 +9,8 @@ package solution;
  * Special thanks to @ts for adding this problem and creating all test cases.
  */
 
+import org.junit.Test;
+
 /**
  * 题目大意：
  * 求出在数组中出现超过一半的次数。
@@ -40,5 +42,10 @@ public class N169_MajorityElement {
         if(count >= nums.length / 2)
             return store;
         return -1;
+    }
+
+    @Test
+    public void test(){
+        System.out.println(majorityElement(new int[]{1,2,3,2,4,2,5,2}));
     }
 }
