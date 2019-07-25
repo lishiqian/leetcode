@@ -36,24 +36,42 @@ import java.util.List;
  * Explanation: The root node's value is 5 but its right child's value is 4.
  */
 public class N098_ValidateBinarySearchTree {
+//    public boolean isValidBST(TreeNode root) {
+//        List<Integer> list = new ArrayList<Integer>();
+//        midOrder(root,list);
+//        for (int i = 1; i < list.size(); i++) {
+//            if(list.get(i-1) >= list.get(i)){
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
+//
+//    public void midOrder(TreeNode root,List<Integer> list){
+//        if(root != null){
+//            midOrder(root.left,list);
+//            list.add(root.val);
+//            midOrder(root.right,list);
+//        }
+//    }
+
+
     public boolean isValidBST(TreeNode root) {
-        List<Integer> list = new ArrayList<Integer>();
-        midOrder(root,list);
-        for (int i = 1; i < list.size(); i++) {
-            if(list.get(i-1) >= list.get(i)){
-                return false;
-            }
-        }
-        return true;
+        return valid(root,Long.MIN_VALUE,Long.MAX_VALUE);
     }
 
-    public void midOrder(TreeNode root,List<Integer> list){
-        if(root != null){
-            midOrder(root.left,list);
-            list.add(root.val);
-            midOrder(root.right,list);
+
+    public boolean valid(TreeNode root,long min,long max){
+        if(root == null)
+            return true;
+        boolean left = valid(root.left,min,root.val);
+        if(root.val <= min || root.val >= max){
+            return false;
         }
+        boolean right = valid(root.right,root.val,max);
+        return left && right;
     }
+
 
     public static void main(String[] args) {
         TreeNode treeNode = TreeNode.stringToTreeNode("[10,5,15,null,null,6,20]");
