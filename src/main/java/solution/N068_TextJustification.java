@@ -28,71 +28,103 @@ import java.util.List;
  */
 public class N068_TextJustification {
     public List<String> fullJustify(String[] words, int maxWidth) {
-        List<String> resList = new ArrayList<String>();
-        int startIndex = 0;
-        while (startIndex < words.length){
-            //得到一行可以容纳最多的字符串个数
-            int wordCount = 0;
-            int sumWordLen = 0;
-            for (int i = 0; (startIndex + i < words.length) && (sumWordLen + words[startIndex + i].length() < maxWidth); i++) {
-                wordCount = i;
-                sumWordLen += words[startIndex + i].length();
-            }
+        int left = 0;
+        List<String> result = new ArrayList<>();
 
-            if(wordCount == 0){
-                sumWordLen = words[startIndex].length();
-            }
-
-            //拼接字符串
-            String lineStr = mergeStr(words, startIndex, wordCount,sumWordLen,maxWidth);
-            resList.add(lineStr);
-
-            startIndex = startIndex + wordCount + 1;
+        while (left < words.length) {
+            int right = findRight(left, words, maxWidth);
+            String line = justfy(left,right,words,maxWidth);
+            result.add(line);
+            left = right + 1;
         }
 
-        return resList;
+        return result;
     }
 
-    public String mergeStr(String[] words,int startIndex,int wordCount,int sumWordLen,int maxWidth){
-        StringBuilder sb = new StringBuilder(maxWidth);
-        int spaceCount = (maxWidth - sumWordLen);
-        sb.append(words[startIndex]);
-        if(startIndex + wordCount + 1 < words.length) {
-            if (wordCount > 0) {
-                int addSpaceCount = spaceCount / (wordCount);//添加空格次数
-                int modSpaceCount = spaceCount % (wordCount);//空格除不尽余数
-                for (int i = startIndex + 1; i <= startIndex + wordCount; i++) {
-                    for (int j = 0; j < addSpaceCount; j++) {
-                        sb.append(' ');
-                    }
-                    if (modSpaceCount > 0) {
-                        sb.append(' ');
-                        modSpaceCount--;
-                    }
-                    sb.append(words[i]);
-                }
-            } else {
-                for (int j = 0; j < spaceCount; j++) {
-                    sb.append(' ');
-                }
-            }
-        }else{ //最后一行特殊处理
-            for (int i = startIndex + 1; i <= startIndex + wordCount; i++){
-                sb.append(' ');
-                sb.append(words[i]);
-                spaceCount--;
-            }
+    /**
+     * 找到当前能填充最大的单词数的索引
+     * @param left
+     * @param words
+     * @param maxWidth
+     * @return
+     */
+    public int findRight(int left, String[] words, int maxWidth){
+        int right = left;
+        int sum = words[right++].length();
 
-            while (spaceCount > 0){
-                sb.append(' ');
+        while (right < words.length && sum + 1 + words[right].length() <= maxWidth)
+            sum += 1 + words[right++].length();
+
+        return right - 1;
+    }
+
+    /**
+     * 按情况填充空格
+     * @param left
+     * @param right
+     * @param words
+     * @param max
+     * @return
+     */
+    public String justfy(int left, int right, String[] words, int maxWidth){
+        boolean isLastLine = right == words.length - 1;
+        int wordNum = right - left + 1;
+        int totalSpace = maxWidth - wordLength(left,right,words);
+        int numSpace = wordNum > 1? totalSpace / (wordNum - 1) : 0;
+        int modSpace = wordNum > 1? totalSpace % (wordNum - 1) : 0;
+        StringBuilder sb = new StringBuilder();
+        sb.append(words[left]);
+
+        if(!isLastLine){
+            for (int i = 1; i < wordNum; i++) {
+                if(i < modSpace + 1) back(sb,numSpace + 1);
+                else back(sb,numSpace);
+                sb.append(words[left + i]);
+            }
+        }else{
+            for (int i = 1; i < wordNum; i++) {
+                back(sb,1);
+                sb.append(words[left + i]);
             }
         }
+        //填充剩余长度
+        back(sb,maxWidth - sb.length());
 
         return sb.toString();
     }
 
+    /**
+     * 计算字母长度
+     * @param left
+     * @param right
+     * @param words
+     * @return
+     */
+    public int wordLength(int left, int right, String[] words){
+        int length = 0;
+
+        for (int i = left; i <= right; i++) {
+            length += words[i].length();
+        }
+
+        return length;
+    }
+
+    /**
+     * 补充空格数量
+     * @param sb
+     * @param n
+     */
+    public void back(StringBuilder sb, int n){
+        for (int i = 0; i < n; i++) {
+            sb.append(' ');
+        }
+    }
+
+
+
     @Test
     public void test(){
-        System.out.println(fullJustify(new String[]{"What","must","be","shall","be."},12));
+        System.out.println(fullJustify(new String[]{"What","must","be","acknowledgment","shall","be."},16));
     }
 }
