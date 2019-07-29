@@ -1,5 +1,7 @@
 package solution;
 
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -65,5 +67,11 @@ public class N078_Subsets {
             subset.remove(subset.size()-1);
         }
 
+    }
+
+
+    @Test
+    public void test(){
+        System.out.println(subsets(new int[]{1,2,3}));
     }
 }
