@@ -32,37 +32,59 @@ import java.util.Stack;
  * The wordList parameter had been changed to a list of strings (instead of a set of strings). Please reload the code definition to get the latest changes.
  */
 public class N126_WordLadderII {
-    public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
-        List<List<String>> ans = new ArrayList<List<String>>();
-        Stack<String> visited = new Stack<String>();
-        visited.add(beginWord);
+//    //超时
+//    public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
+//        List<List<String>> ans = new ArrayList<List<String>>();
+//        if(!wordList.contains(endWord)) return ans;
+//        Stack<String> visited = new Stack<String>();
+//        visited.add(beginWord);
+//
+//        DFS(beginWord,endWord,wordList,visited,ans);
+//        return ans;
+//    }
+//
+//    public void DFS(String curWord, String endWord, List<String> wordList,Stack<String> visited,List<List<String>> ans){
+//        for (int i = 0; i < curWord.length(); i++) {
+//            char[] chars = curWord.toCharArray();
+//            for (char c = 'a'; c <= 'z'; c++) {
+//                chars[i] = c;
+//                String nextWord = new String(chars);
+//
+//                if(nextWord.equals(endWord)){
+//                    visited.add(nextWord);
+//                    addToAns(visited,ans);
+//                    visited.pop();
+//                    return;
+//                }
+//
+//                if(wordList.contains(nextWord) && !visited.contains(nextWord)){
+//                    visited.add(nextWord);
+//                    DFS(nextWord,endWord,wordList,visited,ans);
+//                    visited.pop();
+//                }
+//            }
+//        }
+//    }
+//
+//
+//    public void addToAns(Stack<String> visited,List<List<String>> ans){
+//        if(ans.isEmpty()){
+//            ans.add(new ArrayList<>(visited));
+//        }else{
+//            if(visited.size() > ans.get(0).size()){
+//                return;
+//            }else if(visited.size() == ans.get(0).size()){
+//                ans.add(new ArrayList<>(visited));
+//            }else{
+//                ans.clear();
+//                ans.add(new ArrayList<>(visited));
+//            }
+//        }
+//    }
 
-        DFS(beginWord,endWord,wordList,visited,ans);
-        return ans;
-    }
 
-    public void DFS(String curWord, String endWord, List<String> wordList,Stack<String> visited,List<List<String>> ans){
-        for (int i = 0; i < curWord.length(); i++) {
-            char[] chars = curWord.toCharArray();
-            for (char c = 'a'; c <= 'z'; c++) {
-                chars[i] = c;
-                String nextWord = new String(chars);
 
-                if(nextWord.equals(endWord)){
-                    visited.add(nextWord);
-                    ans.add(new ArrayList<String>(visited));
-                    visited.pop();
-                    return;
-                }
 
-                if(wordList.contains(nextWord) && !visited.contains(nextWord)){
-                    visited.add(nextWord);
-                    DFS(nextWord,endWord,wordList,visited,ans);
-                    visited.pop();
-                }
-            }
-        }
-    }
 
     @Test
     public void test(){

@@ -65,7 +65,6 @@ public class N127_WordLadder {
 //    }
 
 
-    //还是超时
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
         if(!wordList.contains(endWord)) return 0;
         Queue<String> queue = new LinkedList<String>();
